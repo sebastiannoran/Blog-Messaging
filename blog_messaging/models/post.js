@@ -16,10 +16,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Post.init({
     title: DataTypes.STRING,
-    content: DataTypes.TEXT
+    content: DataTypes.TEXT,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',
+    tableName: 'Posts'
   });
   return Post;
 };
