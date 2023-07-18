@@ -10,17 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.User);
-      this.belongsTo(models.Post);
     }
   }
   Comment.init({
-    content: DataTypes.TEXT,
-    userId: DataTypes.INTEGER,
+    content: {
+     type: DataTypes.TEXT,
+     allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Comment',
-    tableName: 'Comments'
+    tableName: 'Comment',
+    underscored: true
   });
   return Comment;
 };

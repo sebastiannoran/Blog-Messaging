@@ -1,24 +1,44 @@
 'use strict';
 
+const user = require('../models/user');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const userId = await queryInterface.bulkInsert('Users', [
-      { name: 'Sebastian Moran', email: 'smoran@example.com', createdAt: new Date(), updatedAt: new Date() },
-    ]);
-    const postId = await queryInterface.bulkInsert('Posts', [
-      { title: 'Succession season 4 ranking', content: '4 > 2 > 3 > 1', userId: userId, createdAt: new Date(), updatedAt: new Date() },
-    ]);
-    await queryInterface.bulkInsert('Comments', [
-      { content: 'Disagree', userId: userId, postId: postId, createdAt: new Date(), updatedAt: new Date() },
-      { content: 'Season 1 was better than 4', userId: userId, postId: postId, createdAt: new Date(), updatedAt: new Date() }
-    ]);
+    await queryInterface.bulkInsert (
+      "User", //name of the table in postgreSQL
+      [
+        {
+          name: "Sebastian",
+          email: "s@example.com",
+          password: "123",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      {}
+    );
+    const User = await queryInterface.sequelize.query('SELECT id FROM User');
+    const userId = User[0][0].userId;
+
+    await queryInterface.bulkInsert(
+      'Post', //name of table in postgreSQL
+      [
+        {
+          title: "Succession seasons ranked",
+          content: "4 > 2 > 3 > 1",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          userId: userId,
+        }
+      ],
+      {}
+    );
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Comments', null, {});
-    await queryInterface.bulkDelete('Posts', null, {});
-    await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('Post', null, {});
+    await queryInterface.bulkDelete('User', null, {});
   }
 };
 
