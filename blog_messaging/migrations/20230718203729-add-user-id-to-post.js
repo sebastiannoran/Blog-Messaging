@@ -1,14 +1,11 @@
 'use strict';
 
-const { sequelize } = require('../models');
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn("Post", "userId", {
+    await queryInterface.addColumn("post", "userId", {
       type: Sequelize.INTEGER,
       references: {
-        model: "User", //use table name that is being referenceed, check postgreSQL table
+        model: "user", 
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -17,6 +14,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn("Post", "userId");
+    await queryInterface.removeColumn("post", "userId");
   }
 };

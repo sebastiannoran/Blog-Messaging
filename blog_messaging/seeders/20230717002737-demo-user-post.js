@@ -6,7 +6,7 @@ const user = require('../models/user');
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert (
-      "User", //name of the table in postgreSQL
+      "user", //name of the table in postgreSQL
       [
         {
           name: "Sebastian",
@@ -18,11 +18,11 @@ module.exports = {
       ],
       {}
     );
-    const User = await queryInterface.sequelize.query('SELECT id FROM User');
+    const User = await queryInterface.sequelize.query('SELECT id FROM user');
     const userId = User[0][0].userId;
 
     await queryInterface.bulkInsert(
-      'Post', //name of table in postgreSQL
+      'post', //name of table in postgreSQL
       [
         {
           title: "Succession seasons ranked",
@@ -37,8 +37,8 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Post', null, {});
-    await queryInterface.bulkDelete('User', null, {});
+    await queryInterface.bulkDelete('post', null, {});
+    await queryInterface.bulkDelete('user', null, {});
   }
 };
 
