@@ -1,12 +1,9 @@
 'use strict';
-
-const user = require('../models/user');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert (
-      "User", //name of the table in postgreSQL
+      "users", //name of the table in postgreSQL
       [
         {
           name: "Sebastian",
@@ -18,11 +15,11 @@ module.exports = {
       ],
       {}
     );
-    const User = await queryInterface.sequelize.query('SELECT id FROM User');
-    const userId = User[0][0].userId;
+    const users = await queryInterface.sequelize.query('SELECT id FROM users');
+    const userId = users[0][0].id;
 
     await queryInterface.bulkInsert(
-      'Post', //name of table in postgreSQL
+      'posts', //name of table in postgreSQL
       [
         {
           title: "Succession seasons ranked",
@@ -34,11 +31,14 @@ module.exports = {
       ],
       {}
     );
+
+    // const Post = await queryInterface.sequelize.query('SELECT id FROM Post');
+    // const postId = Post[0][0].postId;
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Post', null, {});
-    await queryInterface.bulkDelete('User', null, {});
+    await queryInterface.bulkDelete('posts', null, {});
+    await queryInterface.bulkDelete('users', null, {});
   }
 };
 
