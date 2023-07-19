@@ -32,13 +32,27 @@ module.exports = {
       {}
     );
 
-    // const Post = await queryInterface.sequelize.query('SELECT id FROM Post');
-    // const postId = Post[0][0].postId;
+    const posts = await queryInterface.sequelize.query('SELECT id FROM posts');
+    const postId = posts[0][0].id;
+
+    await queryInterface.bulkInsert(
+      'comments', // name of the table
+      [
+        {
+          content: "I agree! Season 4 brought the dramatics",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          postId: postId,
+        }
+      ],
+      {}
+    );
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('posts', null, {});
     await queryInterface.bulkDelete('users', null, {});
+    await queryInterface.bulkDelete('comments', null, {});
   }
 };
 
