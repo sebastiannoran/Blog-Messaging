@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcryptjs');
 
 const user = require('../models/user');
 
@@ -12,7 +13,8 @@ module.exports = {
           name: "Sebastian",
           email: "s@example.com",
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          password: await bcrypt.hash("password", 10)
         }
       ],
       {}
